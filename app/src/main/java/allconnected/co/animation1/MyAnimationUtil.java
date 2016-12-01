@@ -76,6 +76,41 @@ public class MyAnimationUtil {
     }
 
 
+    public static ObjectAnimator getBoundAnimator(View view) {
+
+        PropertyValuesHolder pvhScaleX = PropertyValuesHolder.ofKeyframe(View.SCALE_X,
+                Keyframe.ofFloat(0f, .95f),
+                Keyframe.ofFloat(.1f, .97f),
+                Keyframe.ofFloat(.2f, .97f),
+                Keyframe.ofFloat(.3f, .97f),
+                Keyframe.ofFloat(.4f, .94f),
+                Keyframe.ofFloat(.5f, .94f),
+                Keyframe.ofFloat(.6f, .94f),
+                Keyframe.ofFloat(.7f, .94f),
+                Keyframe.ofFloat(.8f, .97f),
+                Keyframe.ofFloat(.9f, .97f),
+                Keyframe.ofFloat(1f, 1f)
+        );
+
+        PropertyValuesHolder pvhScaleY = PropertyValuesHolder.ofKeyframe(View.SCALE_Y,
+                Keyframe.ofFloat(0f, .95f),
+                Keyframe.ofFloat(.1f, .97f),
+                Keyframe.ofFloat(.2f, .97f),
+                Keyframe.ofFloat(.3f, .97f),
+                Keyframe.ofFloat(.4f, .94f),
+                Keyframe.ofFloat(.5f, .94f),
+                Keyframe.ofFloat(.6f, .94f),
+                Keyframe.ofFloat(.7f, .94f),
+                Keyframe.ofFloat(.8f, .97f),
+                Keyframe.ofFloat(.9f, .97f),
+                Keyframe.ofFloat(1f, 1f)
+        );
+
+        return ObjectAnimator.ofPropertyValuesHolder(view, pvhScaleX, pvhScaleY).
+                setDuration(400);
+    }
+
+
     public static MyCountdownTimer startCountDownAni(TextView view, Animator myanimator, int ticks) {
         MyCountdownTimer myCountdownTimer = new MyCountdownTimer(view, myanimator, ticks);
         myCountdownTimer.start();

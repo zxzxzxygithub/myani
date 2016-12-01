@@ -37,4 +37,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void clickRound(View view){
+        TextView textView= (TextView) findViewById(R.id.tv_round);
+        MyAnimationUtil.getBoundAnimator(textView).start();
+
+    }
 }

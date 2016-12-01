@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="allconnected.co.animation1.MainActivity">
+    android:orientation="vertical"
+    tools:context="allconnected.co.animation1.MainActivity"
+   >
 
     <Button
-        android:text="scale"
+        android:id="@+id/btn_scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="86dp"
-        android:id="@+id/btn_scale" />
+        android:text="scale"
+        />
 
     <TextView
         android:id="@+id/tv_scale"
@@ -25,31 +23,33 @@
         android:layout_height="wrap_content"
         android:text="scale!"
         android:textSize="24sp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="215dp" />
+        />
 
     <TextView
         android:id="@+id/tv_trans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="trans!"
-        android:textSize="24sp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
         android:layout_below="@+id/tv_scale"
-        android:layout_alignLeft="@+id/btn_translate"
-        android:layout_alignStart="@+id/btn_translate"
-        android:layout_marginTop="64dp" />
+        android:text="trans!"
+        android:textSize="24sp" />
 
     <Button
-        android:text="translate"
+        android:id="@+id/btn_translate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
-        android:id="@+id/btn_translate"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:text="translate" />
+
+    <Button
+        android:onClick="clickRound"
+        android:id="@+id/btn_round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="round" />
+
+    <TextView
+        android:id="@+id/tv_round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="round"
+        android:textSize="19sp" />
+</LinearLayout>
