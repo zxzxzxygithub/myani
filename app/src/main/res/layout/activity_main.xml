@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="allconnected.co.animation1.MainActivity"
-   >
+    tools:context="allconnected.co.animation1.MainActivity">
 
     <Button
         android:id="@+id/btn_scale"
@@ -14,16 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="scale"
-        />
+        android:text="scale" />
 
     <TextView
         android:id="@+id/tv_scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="scale!"
-        android:textSize="24sp"
-        />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tv_trans"
@@ -40,10 +37,10 @@
         android:text="translate" />
 
     <Button
-        android:onClick="clickRound"
         android:id="@+id/btn_round"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="clickRound"
         android:text="round" />
 
     <TextView
@@ -52,4 +49,17 @@
         android:layout_height="wrap_content"
         android:text="round"
         android:textSize="19sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showRating" />
+
+    <RatingBar
+        android:stepSize="0.5"
+        android:numStars="5"
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rating="0" />
 </LinearLayout>

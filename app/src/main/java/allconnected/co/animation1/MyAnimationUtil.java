@@ -5,14 +5,23 @@ import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by michael on 16/12/1.
  */
 
 public class MyAnimationUtil {
+
+    private static Handler mHandler = new Handler();
+
+    private static float mCount;
 
     public static ObjectAnimator getCountdownAnimator(View view) {
         PropertyValuesHolder pvhScaleX = PropertyValuesHolder.ofKeyframe(View.SCALE_X,
@@ -149,4 +158,35 @@ public class MyAnimationUtil {
 
         }
     }
+
+    public static Timer showRatingAni(final RatingBar ratingBar) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        float rating = mCount += 0.5;
+                        if (rating > 5) {
+                            mCount = rating = 0;
+                        }
+                        ratingBar.setRating(rating);
+                    }
+                });
+
+            }
+        }, 0, 500);
+
+        return timer;
+
+    }
+
+
+    public static void stopRatingAni(Timer timer) {
+        timer.cancel();
+    }
+
+
 }

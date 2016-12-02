@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView transTv = (TextView) findViewById(R.id.tv_trans);
         final ObjectAnimator countdownAnimator = MyAnimationUtil.getCountdownAnimator(scaleTv);
         float screenWidth=getResources().getDisplayMetrics().widthPixels;
-      final  ObjectAnimator translationAnimator = MyAnimationUtil.getTranslationAnimator(transTv, screenWidth);
+        final  ObjectAnimator translationAnimator = MyAnimationUtil.getTranslationAnimator(transTv, screenWidth);
         Button scaleButton = (Button) findViewById(R.id.btn_scale);
         Button translateButton = (Button) findViewById(R.id.btn_translate);
         translateButton.setOnClickListener(new View.OnClickListener() {
@@ -36,11 +37,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     public void clickRound(View view){
         TextView textView= (TextView) findViewById(R.id.tv_round);
         MyAnimationUtil.getBoundAnimator(textView).start();
+
+    }
+    public void showRating(View view){
+        RatingBar ratingBar= (RatingBar) findViewById(R.id.ratingBar);
+        MyAnimationUtil.showRatingAni(ratingBar);
 
     }
 }
