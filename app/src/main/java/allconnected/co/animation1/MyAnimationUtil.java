@@ -1,6 +1,8 @@
 package allconnected.co.animation1;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 /**
  * Created by michael on 16/12/1.
@@ -188,5 +191,117 @@ public class MyAnimationUtil {
         timer.cancel();
     }
 
+    public static void startEggAni(View lfet, View right, View bird) {
+        Runnable animRunnable = new EggRunnable(lfet, right, bird);
+        mHandler.post(animRunnable);
+    }
+
+    private static int mCount2;
+
+    private static void startAppWallAnimSet(final View leftEggView, final View rightEggView, final View birdView) {
+        final AnimatorSet shakeAnimSet = new AnimatorSet();
+        final AnimatorSet openAnimSet = new AnimatorSet();
+        final AnimatorSet closeAnimSet = new AnimatorSet();
+
+        leftEggView.setPivotX(0.5f);
+        leftEggView.setPivotY(0.5f);
+        rightEggView.setPivotX(0.5f);
+        rightEggView.setPivotY(0.5f);
+
+        //Shake egg
+        ObjectAnimator shakeLeft = ObjectAnimator.ofFloat(leftEggView, "rotation", 0, 3, 6, 3, 0, -3, -6, -3, 0);
+        ObjectAnimator shakeRight = ObjectAnimator.ofFloat(rightEggView, "rotation", 0, 3, 6, 3, 0, -3, -6, -3, 0);
+        shakeLeft.setRepeatCount(3);
+        shakeRight.setRepeatCount(3);
+        shakeAnimSet.setDuration(240);
+        shakeAnimSet.playTogether(shakeLeft, shakeRight);
+
+        // Open egg with bird alpha visible
+        ObjectAnimator openLeft = ObjectAnimator.ofFloat(leftEggView, "rotation", 0, -20, -40, -50, -60, -50, -60, -50);
+        ObjectAnimator openRight = ObjectAnimator.ofFloat(rightEggView, "rotation", 0, 20, 40, 50, 60, 50, 60, 50);
+        ObjectAnimator birdAlphaVisibleAnim = ObjectAnimator.ofFloat(birdView, "alpha", 0, 1);
+        ObjectAnimator translateAnim = ObjectAnimator.ofFloat(birdView, "translationY", 0, 0, 0, 0, 0, 0, 0, 0, 5, -5, 5, 0);
+        openAnimSet.setDuration(1200);
+        openAnimSet.playTogether(openLeft, openRight, birdAlphaVisibleAnim, translateAnim);
+
+        // Close egg with bird alpha invisible
+        ObjectAnimator closeLeft = ObjectAnimator.ofFloat(leftEggView, "rotation", -50, -40, -30, -20, 0);
+        ObjectAnimator closeRight = ObjectAnimator.ofFloat(rightEggView, "rotation", 50, 40, 30, 20, 0);
+        ObjectAnimator birdAlphaGoneAnim = ObjectAnimator.ofFloat(birdView, "alpha", 1, 0);
+        closeAnimSet.setDuration(600);
+        closeAnimSet.playTogether(closeLeft, closeRight, birdAlphaGoneAnim);
+
+        shakeAnimSet.addListener(new AnimatorListenerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+                if (mCount2 == 0) {
+                    mCount2 += 1;
+                    super.onAnimationEnd(animation);
+                    shakeAnimSet.setStartDelay(300);
+                    shakeAnimSet.start();
+                } else if (mCount2 == 1) {
+                    // After twice shaking, start open egg animator
+                    openAnimSet.setStartDelay(200);
+                    openAnimSet.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            super.onAnimationStart(animation);
+                            // Match the open animation delay
+                            birdView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    birdView.setVisibility(View.VISIBLE);
+                                }
+                            }, 300);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            closeAnimSet.setStartDelay(500);
+                            closeAnimSet.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    mCount2 = 0;
+                                    birdView.setVisibility(View.INVISIBLE);
+                                    closeAnimSet.removeAllListeners();
+                                    shakeAnimSet.setStartDelay(1000);
+                                    shakeAnimSet.start();
+                                }
+                            });
+                            openAnimSet.removeAllListeners();
+                            closeAnimSet.start();
+                        }
+                    });
+                    openAnimSet.start();
+                    return;
+                }
+            }
+        });
+        shakeAnimSet.start();
+    }
+
+
+    private static class EggRunnable implements Runnable {
+
+        private View leftEggIv, rightEggIv, birdIv;
+
+        public EggRunnable(View left, View right, View bird) {
+
+            this.leftEggIv = left;
+            this.rightEggIv = right;
+            this.birdIv = bird;
+
+        }
+
+        @Override
+        public void run() {
+            startAppWallAnimSet(leftEggIv, rightEggIv, birdIv);
+
+        }
+    }
 
 }
